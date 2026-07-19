@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сергей Демченко — Юрист в кармане | Бесплатные юридические консультации 24/7</title>
+    <meta name="description" content="Бесплатные юридические консультации 24/7 для граждан и бизнеса от юриста с 20-летним стажем Сергея Демченко. Ответы со ссылками на нормы права.">
+
+    <!-- Открытый граф — для красивых превью при шаринге в Telegram/VK -->
+    <meta property="og:title" content="Сергей Демченко — Юрист в кармане">
+    <meta property="og:description" content="Бесплатные юридические консультации 24/7 для граждан и бизнеса">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zakondemchenko.ru">
+    <meta property="og:image" content="https://zakondemchenko.ru/assets/img/sergey-demchenko.jpg">
+
+    <link rel="canonical" href="https://zakondemchenko.ru/">
+
+    <!-- Фавикон: тёмно-синий квадрат с золотыми буквами «Юр» -->
+    <link rel="icon" href="/assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <meta name="theme-color" content="#0f1f3d">
+
+    <!--
+        ШРИФТ: preconnect + display=swap, чтобы не блокировать рендер текста.
+        Дальнейший шаг для ещё более быстрой загрузки — самостоятельно захостить
+        woff2 в assets/fonts вместо Google Fonts CDN (не сделано намеренно,
+        см. README — требует скачивания файла шрифта).
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!--
+        Tailwind собран статически через Tailwind CLI v4 (assets/css/tailwind-input.css -> tailwind.min.css),
+        вместо CDN-JIT-компилятора — так быстрее и не грузит браузер компиляцией на лету.
+        Пересобрать после правок разметки:
+            npx tailwindcss -i assets/css/tailwind-input.css -o assets/css/tailwind.min.css --minify
+    -->
+    <link rel="stylesheet" href="assets/css/tailwind.min.css?v=2">
+    <link rel="stylesheet" href="assets/css/style.css?v=2">
+
+    <!-- Иконки: лёгкий инлайновый SVG-набор вместо тяжёлого icon-font (см. style.css/script.js) -->
+</head>
+<body class="bg-white text-navy antialiased">
+
+    <!-- ===================== HEADER ===================== -->
+    <header id="site-header" class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-navy/10 transition-shadow">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+            <a href="#top" class="flex items-center gap-2 font-extrabold text-lg sm:text-xl leading-tight">
+                <span class="text-navy">zakondemchenko.ru</span>
+                <span class="hidden sm:inline text-navy/40">|</span>
+                <span class="hidden sm:inline text-gold">Юрист в кармане</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 font-medium">
+                <a href="#top" class="hover:text-gold transition-colors">Главная</a>
+                <a href="#news" class="hover:text-gold transition-colors">Новости</a>
+                <a href="#vk-feed" class="hover:text-gold transition-colors">Лента VK</a>
+                <a href="#ask" class="hover:text-gold transition-colors">Задать вопрос</a>
+            </nav>
+
+            <a href="#ask" class="hidden md:inline-flex items-center gap-2 bg-navy text-white px-5 py-2.5 rounded-full font-semibold hover:bg-navy-light transition-colors">
+                Получить консультацию
+            </a>
+
+            <button id="menu-toggle" class="md:hidden p-2 -mr-2" aria-label="Открыть меню" aria-expanded="false">
+                <svg id="icon-burger" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <nav id="mobile-menu" class="md:hidden hidden border-t border-navy/10 bg-white px-4 py-3 flex flex-col gap-1">
+            <a href="#top" class="py-2.5 font-medium">Главная</a>
+            <a href="#news" class="py-2.5 font-medium">Новости</a>
+            <a href="#vk-feed" class="py-2.5 font-medium">Лента VK</a>
+            <a href="#ask" class="py-2.5 font-medium">Задать вопрос</a>
+        </nav>
+    </header>
+
+    <main id="top">
+        <!-- ===================== HERO ===================== -->
+        <section class="pt-28 pb-16 sm:pt-36 sm:pb-24 px-4 sm:px-6 bg-gradient-to-b from-navy/5 to-white">
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+
+                <div class="order-1 md:order-1 flex justify-center md:justify-start">
+                    <div class="relative w-64 sm:w-80 md:w-full max-w-sm">
+                        <div class="absolute -inset-3 bg-gradient-to-br from-gold/30 to-trust/20 rounded-3xl blur-xl"></div>
+                        <img
+                            src="assets/img/sergey-demchenko.jpg"
+                            alt="Сергей Демченко — юрист, 20 лет практики"
+                            width="480" height="600"
+                            class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/5]"
+                            fetchpriority="high"
+                        >
+                        <!-- ⚠️ Замените assets/img/sergey-demchenko.jpg на реальное фото Сергея (рекомендуемый формат — WebP/JPG, ~480×600) -->
+                    </div>
+                </div>
+
+                <div class="order-2 md:order-2 text-center md:text-left">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+                        Сергей Демченко.<br>
+                        <span class="text-navy">Ваш личный юрист</span>
+                        с <span class="text-gold">20-летним стажем</span>
+                    </h1>
+
+                    <p class="text-lg text-navy/70 mb-6 max-w-xl mx-auto md:mx-0">
+                        Я люблю свою профессию и хочу, чтобы люди знали свои права и быстро получали
+                        квалифицированную юридическую помощь — бесплатно.
+                    </p>
+
+                    <p class="inline-block bg-trust/10 text-trust font-bold px-4 py-2.5 rounded-xl mb-8 border border-trust/20">
+                        ⚖️ Бесплатные юридические консультации 24/7 по любым вопросам
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="https://t.me/pravkomp" onclick="openTelegramLink(event, 'pravkomp')" target="_blank" rel="noopener"
+                           class="inline-flex items-center justify-center gap-3 bg-[#229ED9] hover:bg-[#1c87ba] text-white font-bold text-lg px-7 py-4 rounded-2xl shadow-lg shadow-[#229ED9]/25 transition-all hover:-translate-y-0.5">
+                            <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71l-4.14-3.05-2 1.93c-.22.22-.4.4-.82.4z"/></svg>
+                            Задать вопрос в Telegram
+                        </a>
+                        <a href="https://vk.com/prav_kompas" target="_blank" rel="noopener"
+                           class="inline-flex items-center justify-center gap-3 bg-[#0077FF] hover:bg-[#0066d9] text-white font-bold text-lg px-7 py-4 rounded-2xl shadow-lg shadow-[#0077FF]/25 transition-all hover:-translate-y-0.5">
+                            <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M13.16 19.5c-6.5 0-10.6-4.53-10.77-11.94h3.34c.12 5.32 2.4 7.57 4.13 8.02V7.56h3.15v4.73c1.72-.19 3.52-2.28 4.13-4.73h3.15c-.47 2.96-2.55 5.06-4.03 5.92 1.48.7 3.85 2.53 4.75 5.02h-3.46c-.7-2.29-2.34-4.06-4.53-4.28v4.28h-.4z"/></svg>
+                            Задать вопрос в ВКонтакте
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== БЛОК ДОВЕРИЯ ===================== -->
+        <section class="py-14 sm:py-20 px-4 sm:px-6 bg-navy text-white">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-center mb-10">Почему мне можно доверять</h2>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-colors">
+                        <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-gold/15 flex items-center justify-center text-gold">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <p class="font-bold text-lg">20+ лет практики</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-colors">
+                        <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-gold/15 flex items-center justify-center text-gold">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6M9 8h6M5 4h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/></svg>
+                        </div>
+                        <p class="font-bold text-lg">Ответы со ссылками на законы</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-colors">
+                        <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-gold/15 flex items-center justify-center text-gold">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 100-8 4 4 0 000 8zm6 4a4 4 0 00-3-3.87M5 12a4 4 0 013.87-3M15 8a4 4 0 00-3.87-3"/></svg>
+                        </div>
+                        <p class="font-bold text-lg">Помощь гражданам и бизнесу</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-colors">
+                        <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-gold/15 flex items-center justify-center text-gold">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        </div>
+                        <p class="font-bold text-lg">Полная конфиденциальность</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== НОВОСТИ ===================== -->
+        <section id="news" class="py-16 sm:py-24 px-4 sm:px-6 scroll-mt-16">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mb-3">Актуальные новости права</h2>
+                    <p class="text-navy/60 max-w-xl mx-auto">Коротко о главных изменениях в законодательстве — отдельно для бизнеса и для граждан</p>
+                </div>
+
+                <!-- Табы для мобильных -->
+                <div class="flex md:hidden gap-2 mb-6 justify-center" role="tablist">
+                    <button class="news-tab-btn active px-5 py-2 rounded-full font-semibold text-sm border border-navy/15" data-tab="business">Для бизнеса</button>
+                    <button class="news-tab-btn px-5 py-2 rounded-full font-semibold text-sm border border-navy/15" data-tab="citizens">Для граждан</button>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="news-column" data-tab-panel="business">
+                        <h3 class="hidden md:flex items-center gap-2 text-xl font-bold mb-5 text-trust">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            Важно для бизнеса
+                        </h3>
+                        <div id="news-business" class="space-y-4"><!-- заполняется script.js из data/news.json --></div>
+                    </div>
+
+                    <div class="news-column hidden md:block" data-tab-panel="citizens">
+                        <h3 class="hidden md:flex items-center gap-2 text-xl font-bold mb-5 text-trust">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                            Важно для граждан
+                        </h3>
+                        <div id="news-citizens" class="space-y-4"><!-- заполняется script.js из data/news.json --></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== ЛЕНТА VK ===================== -->
+        <section id="vk-feed" class="py-16 sm:py-24 px-4 sm:px-6 bg-navy/5 scroll-mt-16">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mb-3">Последние юридические разборы в нашей группе ВК</h2>
+                    <p class="text-navy/60">Только текст — быстро загружается, удобно читать</p>
+                </div>
+
+                <div id="vk-posts" class="space-y-5">
+                    <!-- Скелетоны на время загрузки -->
+                    <div class="vk-skeleton"></div>
+                    <div class="vk-skeleton"></div>
+                    <div class="vk-skeleton"></div>
+                </div>
+
+                <div class="text-center mt-8">
+                    <a href="https://vk.com/prav_kompas" target="_blank" rel="noopener" class="inline-flex items-center gap-2 font-semibold text-trust hover:text-navy transition-colors">
+                        Все записи в группе ВКонтакте →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== ФОРМА ВОПРОСА ===================== -->
+        <section id="ask" class="py-16 sm:py-24 px-4 sm:px-6 scroll-mt-16">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mb-3">Задать вопрос прямо на сайте</h2>
+                    <p class="text-navy/60">Ответим бесплатно, со ссылками на нормы права</p>
+                </div>
+
+                <form id="ask-form" class="bg-white border border-navy/10 shadow-xl shadow-navy/5 rounded-3xl p-6 sm:p-10 space-y-5" novalidate>
+                    <div>
+                        <label for="f-name" class="block font-semibold mb-1.5">Ваше имя <span class="text-red-500">*</span></label>
+                        <input id="f-name" name="name" type="text" required
+                               class="w-full px-4 py-3 rounded-xl border border-navy/15 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition"
+                               placeholder="Иван">
+                        <p class="field-error" data-error-for="name"></p>
+                    </div>
+
+                    <div>
+                        <label for="f-contact" class="block font-semibold mb-1.5">Почта или Telegram-ник <span class="text-red-500">*</span></label>
+                        <input id="f-contact" name="contact" type="text" required
+                               class="w-full px-4 py-3 rounded-xl border border-navy/15 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition"
+                               placeholder="you@email.com или @username">
+                        <p class="field-error" data-error-for="contact"></p>
+                    </div>
+
+                    <div>
+                        <label for="f-question" class="block font-semibold mb-1.5">Ваш вопрос <span class="text-red-500">*</span></label>
+                        <textarea id="f-question" name="question" required rows="5"
+                                  class="w-full px-4 py-3 rounded-xl border border-navy/15 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition resize-y"
+                                  placeholder="Опишите вашу ситуацию как можно подробнее..."></textarea>
+                        <p class="field-error" data-error-for="question"></p>
+                    </div>
+
+                    <!-- honeypot: скрытое поле-ловушка для ботов, реальные пользователи его не видят и не заполняют -->
+                    <div class="hidden" aria-hidden="true">
+                        <label for="f-website">Website</label>
+                        <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+                    </div>
+
+                    <label class="flex items-start gap-3 text-sm text-navy/70">
+                        <input id="f-consent" type="checkbox" required class="mt-1 accent-gold w-4 h-4">
+                        <span>Я согласен на <a href="consent.html" target="_blank" class="text-trust underline hover:text-navy">обработку персональных данных</a> в соответствии с <a href="privacy.html" target="_blank" class="text-trust underline hover:text-navy">Политикой конфиденциальности</a></span>
+                    </label>
+
+                    <button type="submit" id="ask-submit"
+                            class="w-full bg-navy hover:bg-navy-light text-white font-bold text-lg py-4 rounded-2xl transition-colors flex items-center justify-center gap-2">
+                        <span id="ask-submit-text">Получить бесплатный ответ</span>
+                        <svg id="ask-spinner" class="hidden w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                    </button>
+
+                    <p id="ask-success" class="hidden bg-trust/10 text-trust font-medium text-center rounded-xl py-3 px-4"></p>
+                    <p id="ask-general-error" class="hidden bg-red-50 text-red-600 font-medium text-center rounded-xl py-3 px-4"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===================== МОДАЛКА: не запущен бот / нет разрешения VK ===================== -->
+    <div id="opt-in-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full p-7 sm:p-8 text-center shadow-2xl relative">
+            <button id="opt-in-close" class="absolute top-4 right-4 text-navy/40 hover:text-navy" aria-label="Закрыть">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-gold/15 flex items-center justify-center text-gold">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Вопрос принят!</h3>
+            <p id="opt-in-text" class="text-navy/70 mb-6"></p>
+            <div id="opt-in-actions" class="flex flex-col gap-3"></div>
+        </div>
+    </div>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="bg-navy text-white/70 py-12 px-4 sm:px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid sm:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <p class="text-white font-extrabold text-lg mb-2">zakondemchenko.ru</p>
+                    <p class="text-sm">Юрист в кармане — бесплатные консультации 24/7</p>
+                </div>
+                <div>
+                    <p class="text-white font-semibold mb-2">Контакты</p>
+                    <a href="https://t.me/pravkomp" onclick="openTelegramLink(event, 'pravkomp')" target="_blank" rel="noopener" class="block text-sm hover:text-gold transition-colors mb-1">Telegram: @pravkomp</a>
+                    <a href="https://vk.com/prav_kompas" target="_blank" rel="noopener" class="block text-sm hover:text-gold transition-colors">ВКонтакте: prav_kompas</a>
+                </div>
+                <div>
+                    <p class="text-white font-semibold mb-2">Документы</p>
+                    <a href="privacy.html" class="block text-sm hover:text-gold transition-colors mb-1">Политика конфиденциальности</a>
+                    <a href="consent.html" class="block text-sm hover:text-gold transition-colors">Согласие на обработку ПДн</a>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-6 text-sm text-center sm:text-left">
+                © <span id="year"></span> Сергей Демченко. Все права защищены. Информация на сайте носит справочный характер и не является офертой.
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js?v=3" defer></script>
+</body>
+</html>

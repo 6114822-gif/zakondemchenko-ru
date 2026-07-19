@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+/*
+  Кастомная палитра проекта (было в tailwind.config внутри index.html
+  для CDN-версии, теперь — нативный синтаксис Tailwind v4).
+  Меняете фирменные цвета — правьте только здесь и пересобирайте:
+    npx tailwindcss -i assets/css/tailwind-input.css -o assets/css/tailwind.min.css --minify
+*/
+@theme {
+    --color-navy: #0f1f3d;
+    --color-navy-dark: #0a1529;
+    --color-navy-light: #16295a;
+    --color-gold: #c9a227;
+    --color-gold-light: #e6c65c;
+    --color-trust: #1e7a4c;
+    --font-sans: 'Manrope', system-ui, sans-serif;
+}

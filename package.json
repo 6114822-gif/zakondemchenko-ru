@@ -1,0 +1,15 @@
+{
+  "name": "zakondemchenko",
+  "version": "1.0.0",
+  "private": true,
+  "description": "zakondemchenko.ru — Юрист в кармане",
+  "scripts": {
+    "build:css": "tailwindcss -i assets/css/tailwind-input.css -o assets/css/tailwind.min.css --minify",
+    "watch:css": "tailwindcss -i assets/css/tailwind-input.css -o assets/css/tailwind.min.css --watch"
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.2",
+    "tailwindcss": "^4.3.2"
+  }
+}

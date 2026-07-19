@@ -1,0 +1,38 @@
+# === zakondemchenko.ru — конфигурация Apache для Beget ===
+
+# Принудительный HTTPS и редирект с www на без-www
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+# Закрываем доступ к служебным папкам напрямую из браузера.
+# Папку data/ блокируем целиком, КРОМЕ news.json — его читает фронтенд через fetch('data/news.json').
+RewriteRule ^(includes|sql)/ - [F,L]
+RewriteRule ^data/(?!news\.json$) - [F,L]
+
+# Запрещаем листинг директорий
+Options -Indexes
+
+# Сжатие текстовых ответов
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Кэширование статики в браузере
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# Базовые security-заголовки
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
