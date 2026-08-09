@@ -11,10 +11,11 @@
     // и передаёт напрямую установленному приложению, без DNS-запроса.
     // Если приложения нет (или это десktop без ассоциации схемы) — через
     // короткий таймаут откатываемся на обычную ссылку как запасной вариант.
-    window.openTelegramLink = function (event, domain) {
+    window.openTelegramLink = function (event, domain, startParam) {
         event.preventDefault();
-        const appUrl = 'tg://resolve?domain=' + domain;
-        const webUrl = 'https://t.me/' + domain;
+        const startSuffix = startParam ? ('&start=' + encodeURIComponent(startParam)) : '';
+        const appUrl = 'tg://resolve?domain=' + domain + startSuffix;
+        const webUrl = 'https://t.me/' + domain + (startParam ? ('?start=' + encodeURIComponent(startParam)) : '');
 
         let leftPage = false;
         const onBlur = () => { leftPage = true; };
@@ -58,7 +59,7 @@
     });
 
     // ---------- Reveal-on-scroll ----------
-    document.querySelectorAll('section > div, .news-card, .vk-post').forEach(el => el.classList.add('reveal'));
+    document.querySelectorAll('.practice-card, .news-card, .vk-post').forEach(el => el.classList.add('reveal'));
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -106,12 +107,12 @@
         items.slice(0, 3).forEach(item => {
             const card = document.createElement('a');
             card.className = 'news-card';
-            card.href = item.link || '#';
+            card.href = item.source || item.link || '#';
             card.target = '_blank';
             card.rel = 'noopener';
             card.innerHTML = `
                 <time>${formatDate(item.date)}</time>
-                <h4>${escapeHtml(item.title)}</h4>
+                <h3>${escapeHtml(item.title)}</h3>
                 <p>${escapeHtml(item.excerpt)}</p>
             `;
             container.appendChild(card);
@@ -135,8 +136,14 @@
     const tabPanels = document.querySelectorAll('[data-tab-panel]');
     tabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            tabButtons.forEach(b => b.classList.remove('active'));
+            tabButtons.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+                b.setAttribute('tabindex', '-1');
+            });
             btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+            btn.removeAttribute('tabindex');
             const target = btn.dataset.tab;
             tabPanels.forEach(panel => {
                 panel.classList.toggle('hidden', panel.dataset.tabPanel !== target);
@@ -204,9 +211,9 @@
         const contact = (data.contact || '').trim();
         const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
         const isTelegram = /^@?[a-zA-Z0-9_]{5,32}$/.test(contact) || /t\.me\/[a-zA-Z0-9_]{5,32}/i.test(contact);
-        const isVk = /vk\.com\/[a-zA-Z0-9_.]{2,64}/i.test(contact);
+        const isVk = /vk\.(?:com|ru)\/[a-zA-Z0-9_.]{2,64}/i.test(contact);
         if (!contact || (!isEmail && !isTelegram && !isVk)) {
-            errors.contact = 'Укажите email (например, ivan@mail.ru) или Telegram-ник (например, @ivanov)';
+            errors.contact = 'Укажите email, Telegram-ник или ссылку на профиль VK';
         }
         if (!data.question || data.question.trim().length < 10) {
             errors.question = 'Опишите вопрос подробнее (минимум 10 символов)';
@@ -261,11 +268,14 @@
             }
 
             form.reset();
-            successBox.textContent = 'Спасибо! Ваш вопрос принят в работу.';
+            successBox.textContent = 'Спасибо! Вопрос принят. Ответ придёт вам на указанный контакт в течение нескольких минут.';
             successBox.classList.remove('hidden');
+            if (window.pravkompasReachGoal) {
+                window.pravkompasReachGoal('question_submitted');
+            }
 
             if (result.autoReply === 'telegram_not_started') {
-                showOptInModal('telegram');
+                showOptInModal('telegram', result.telegramDeepLink);
             } else if (result.autoReply === 'vk_not_allowed') {
                 showOptInModal('vk');
             }
@@ -285,13 +295,21 @@
     const modalActions = document.getElementById('opt-in-actions');
     const modalClose = document.getElementById('opt-in-close');
 
-    function showOptInModal(type) {
+    function showOptInModal(type, telegramDeepLink) {
         if (type === 'telegram') {
-            modalText.textContent = 'Чтобы мы могли ответить вам в Telegram, пожалуйста, сначала нажмите кнопку «Запустить» в нашем боте, а затем задайте вопрос ещё раз.';
+            const fallbackUrl = 'https://t.me/PravKompas_bot';
+            const linkUrl = telegramDeepLink || fallbackUrl;
+            let startParam = '';
+            try {
+                startParam = new URL(linkUrl).searchParams.get('start') || '';
+            } catch (e) {
+                startParam = '';
+            }
+            modalText.textContent = 'Откройте Telegram, пожалуйста, — там уже находится ответ на ваш вопрос.';
             modalActions.innerHTML = `
-                <a href="https://t.me/PravKompas_bot" onclick="openTelegramLink(event, 'PravKompas_bot')" target="_blank" rel="noopener"
+                <a href="${linkUrl}" onclick="openTelegramLink(event, 'PravKompas_bot', '${startParam}')" target="_blank" rel="noopener"
                    class="bg-[#229ED9] hover:bg-[#1c87ba] text-white font-bold py-3 rounded-xl transition-colors">
-                   Открыть @PravKompas_bot
+                   Открыть Telegram
                 </a>
             `;
         } else {
