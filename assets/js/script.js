@@ -227,6 +227,7 @@
 
         const formData = new FormData(form);
         const payload = Object.fromEntries(formData.entries());
+        payload.consent = true; // чекбокс уже проверен выше; сервер проверяет повторно
 
         const clientErrors = validateClientSide(payload);
         if (Object.keys(clientErrors).length > 0) {
@@ -249,7 +250,7 @@
             if (!result.success) {
                 if (result.errors) {
                     Object.entries(result.errors).forEach(([field, msg]) => {
-                        if (field === 'general') {
+                        if (field === 'general' || field === 'consent') {
                             generalErrorBox.textContent = msg;
                             generalErrorBox.classList.remove('hidden');
                         } else {
