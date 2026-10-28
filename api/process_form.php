@@ -39,6 +39,12 @@ $contactRaw = clean_str((string) ($input['contact'] ?? ''), 255);
 $question = clean_str((string) ($input['question'] ?? ''), 2000);
 // honeypot-поле: должно быть пустым, боты обычно заполняют все поля
 $honeypot = (string) ($input['website'] ?? '');
+// согласие на обработку ПДн: принимаем только явное true/"1"/"on", проверяем на сервере
+$consentRaw = $input['consent'] ?? false;
+$consent = $consentRaw === true || in_array($consentRaw, ['1', 'true', 'on', 1], true);
+// источник и услуга — только из белого списка (для атрибуции заявок с посадочных страниц)
+$source = in_array($input['source'] ?? '', ['landing-podryad', 'home'], true) ? (string) $input['source'] : 'home';
+$service = in_array($input['service'] ?? '', ['contract', 'claim', 'arbitration'], true) ? (string) $input['service'] : '';
 
 $errors = [];
 
@@ -58,6 +64,10 @@ if (mb_strlen($question) < 10) {
 if ($honeypot !== '') {
     // Похоже на бота — молча делаем вид, что всё прошло успешно
     json_response(['success' => true, 'autoReply' => 'skipped']);
+}
+
+if (!$consent) {
+    $errors['consent'] = 'Необходимо согласие на обработку персональных данных';
 }
 
 if (!empty($errors)) {
@@ -93,7 +103,8 @@ $questionId = (int) $pdo->lastInsertId();
 touch_rate_limit($pdo, $ip);
 
 // --- Уведомление админу в Telegram ---
-$adminText = "🆕 Новый вопрос с сайта (#{$questionId})\n\n"
+$adminText = "🆕 Новый вопрос с сайта (#{$questionId})\n"
+    . "Источник: {$source}" . ($service !== '' ? ", услуга: {$service}" : '') . "\n\n"
     . "Имя: {$name}\n"
     . "Контакт: {$contact['value']} ({$contact['type']})\n\n"
     . "Вопрос:\n{$question}";

@@ -6,6 +6,11 @@
     if (['contract', 'claim', 'arbitration'].includes(service)) detail.service = service;
     window.dispatchEvent(new CustomEvent('contractor:goal', { detail }));
   }
+  // Bridge to the site-wide analytics (assets/js/analytics.js), if present. That helper sends a goal
+  // only after the visitor accepted analytics, so this is a no-op otherwise.
+  window.addEventListener('contractor:goal', ({ detail }) => {
+    if (typeof window.pravkompasReachGoal === 'function') window.pravkompasReachGoal(detail.event);
+  });
   document.querySelectorAll('[data-goal]').forEach(link => {
     link.addEventListener('click', () => goal(link.dataset.goal, link.dataset.service));
   });
@@ -14,11 +19,13 @@
   const button = form.querySelector('button[type=submit]');
   let sending = false;
   let started = false;
+  let selectedService = '';
   form.addEventListener('input', () => {
     if (!started) { started = true; goal('form_start'); }
   });
   document.querySelectorAll('[data-service]').forEach(link => {
     link.addEventListener('click', () => {
+      selectedService = link.dataset.service;
       const question = form.elements.question;
       if (!question.value.trim()) {
         question.value = {contract: 'Нужна проверка договора подряда. ', claim: 'Нужна претензия по неоплате работ. ', arbitration: 'Нужны документы для арбитражного спора. '}[link.dataset.service];
@@ -35,6 +42,9 @@
     payload.contact = payload.contact.trim();
     payload.question = payload.question.trim();
     if (payload.website) return;
+    payload.consent = form.elements.consent.checked; // server re-validates
+    payload.source = 'landing-podryad';
+    if (selectedService) payload.service = selectedService;
     const validContact = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.contact) || /^@?[a-zA-Z0-9_]{5,32}$/.test(payload.contact) || /^https?:\/\/t\.me\/[a-zA-Z0-9_]{5,32}\/?$/i.test(payload.contact);
     if (payload.name.length < 2 || payload.question.length < 10 || !validContact) {
       status.dataset.error = 'true';
@@ -55,6 +65,7 @@
       goal('lead_saved');
       form.reset();
       started = false;
+      selectedService = '';
       status.textContent = 'Заявка сохранена. Отправка заявки не означает оплату услуги.';
       if (result.autoReply === 'telegram_not_started') status.textContent += ' Для ответа в Telegram нажмите «Запустить» у @PravKompas_bot по ссылке выше. Повторно отправлять заявку не нужно.';
       if (result.autoReply === 'email_failed') status.textContent += ' Автоответ по email не отправлен. Заявка сохранена; при срочном сроке свяжитесь напрямую.';

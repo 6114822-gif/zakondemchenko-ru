@@ -34,6 +34,9 @@ const assert = require('node:assert/strict');
       const payload = route.request().postDataJSON();
       assert.equal(payload.name, 'Тест Подрядчик');
       assert.equal(payload.contact, 'test@example.ru');
+      assert.equal(payload.consent, true);
+      assert.equal(payload.source, 'landing-podryad');
+      assert.ok(payload.service === 'claim' || payload.service === undefined); // cleared after a saved lead
       if (mode === 'delay') await new Promise(resolve => { release = resolve; });
       if (mode === 'network') return route.abort();
       await route.fulfill({ status: mode === 'error' ? 500 : 200, contentType:'application/json', body:JSON.stringify(mode === 'error' ? {success:false} : {success:true, autoReply:'telegram_not_started'}) });
