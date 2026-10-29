@@ -1,0 +1,16 @@
+--- a/api/process_form.php
++++ b/api/process_form.php
+@@ -45,0 +46,9 @@
++// Fixed labels only; do not place arbitrary campaign/query text into CRM.
++$source = in_array($input['source'] ?? '', ['landing-podryad', 'home'], true) ? $input['source'] : 'home';
++$service = in_array($input['service'] ?? '', ['contract', 'claim', 'arbitration'], true) ? $input['service'] : '';
++$leadMetadata = [
++    'source' => $source,
++    'service' => $service,
++    'consent_received_at' => gmdate('c'),
++    'consent_sha256' => hash_file('sha256', __DIR__ . '/../consent.html'),
++];
+@@ -119 +128,2 @@
+-            'source' => 'zakondemchenko.ru/form',
++            'source' => $source === 'landing-podryad' ? 'zakondemchenko.ru/landing-podryad' : 'zakondemchenko.ru/form',
++            'lead_metadata' => $leadMetadata,
