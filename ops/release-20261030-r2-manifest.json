@@ -1,0 +1,77 @@
+{
+  "release": "release-20261030-r2",
+  "files": [
+    {
+      "target": "zakondemchenko.ru/public_html/api/intake_telegram_webhook.php",
+      "source": "site/api/intake_telegram_webhook.php",
+      "before": null,
+      "after": "93d5d3df34c9c1974f42f0f792873b44fbe90457719c370c9467e83a343a7618"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/api/process_form.php",
+      "source": "site/api/process_form.php",
+      "before": "40b5bf11725033966b899cbe1d914eede6ca1b472adcf44e7289ad0d4107803f",
+      "after": "64fcc9fcf45c82923a4e04ec4ad88a813a89162c01728b2545cb486192ddb3ce"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/assets/css/landing-podryad.css",
+      "source": "site/assets/css/landing-podryad.css",
+      "before": null,
+      "after": "a5de1756d74dd332e4a5ab9e916967be61f85f65a9b1f10a3bc2a640274bec02"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/assets/js/analytics.js",
+      "source": "site/assets/js/analytics.js",
+      "before": "e88cf5dd44e3a5e008fecc230b4ef6e71bd0393e82ed25f3569f3cfcb04368e6",
+      "after": "8c0e40ab8a44b16fc5a0aff26a6cc7fe8cff0c3057b95b85b3e30aa469c8118b"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/assets/js/landing-podryad.js",
+      "source": "site/assets/js/landing-podryad.js",
+      "before": null,
+      "after": "b9feec17fc3ae768225148963404cad13388bc6c2771b4b5c287203c49c6c612"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/assets/js/legal-checkout.js",
+      "source": "site/assets/js/legal-checkout.js",
+      "before": "3c6d2890ccd6d39b97109f6997f0cb73acc3f37bdb15f6a926cfe39ed960c607",
+      "after": "4ed58ea288828332548b205fe4de9d9c8b66c4aea5e8ae26b5de0e1580318cee"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/assets/js/payment-confirmation.js",
+      "source": "site/assets/js/payment-confirmation.js",
+      "before": null,
+      "after": "43bd013937e068924794349df64e020ff82a4e4135683ceaa27a319c605046e0"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/consent.html",
+      "source": "site/consent.html",
+      "before": "75730f0342638fc8b7e8be69f55417b5fb17ac052e1f7c00182f7e40f52d9185",
+      "after": "a80fe796e210aa6795fcda762555aa12388a7add438c3e24d3182c1a34bf75ab"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/landing-podryad.html",
+      "source": "site/landing-podryad.html",
+      "before": null,
+      "after": "76c6c27507c5d6d2d46243c902f42590b95b8aa374f55c158547aca8c478c1c7"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/oplata/uspeshno/index.html",
+      "source": "site/oplata/uspeshno/index.html",
+      "before": "3f9d8dcf6efd17ca62d22cc61af844275315b241f38366f16a93a47efe4bbc96",
+      "after": "e756171286cc8ffd1fdf63d11f88cd0ed1bde0061fdbc298bdaef855b145c76a"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/privacy.html",
+      "source": "site/privacy.html",
+      "before": "2f57db82090f1030f57f68fc0756a8e15b5a27a01aefc0d7adb1bca0f4cfd70f",
+      "after": "412ea9b13d347ad41c862760cfe2dddee7369ed441f2d9dd20f72b31a3d3d61f"
+    },
+    {
+      "target": "demchenkos.ru/public_html/api/legal_crm_relay.php",
+      "source": "crm/legal_crm_relay.php",
+      "before": "ae75c1a56b3a2a765a942993a7dd3937105244a34bc510f378747a97e070e7ef",
+      "after": "5f8cf38e5268de66f83c87f3d37d2e9b97593d3a60a0ae6dc5928be0f72d60d4"
+    }
+  ]
+}

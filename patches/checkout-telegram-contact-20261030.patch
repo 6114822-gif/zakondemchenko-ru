@@ -1,0 +1,80 @@
+--- a/api/legal_create_order.php
++++ b/api/legal_create_order.php
+@@ -42,11 +42,17 @@
+ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+     $errors['email'] = 'Укажите корректный email';
+ }
++if (preg_match('/\A@[A-Za-z0-9_]{5,32}\z/D', $contact) !== 1) {
++    $errors['contact'] = 'Укажите Telegram-ник для связи, например @username';
++}
+ if (($input['offer'] ?? '') !== '1') {
+     $errors['offer'] = 'Примите условия оферты';
+ }
+ if (($input['privacy'] ?? '') !== '1') {
+     $errors['privacy'] = 'Подтвердите согласие на обработку данных';
++}
++if ($serviceSlug === 'vneshtatny-yurist' && $payer !== 'company') {
++    $errors['payer'] = 'Сопровождение оформляется для организации или ИП после согласования объёма';
+ }
+ if ($payer === 'company') {
+     if (mb_strlen($companyName) < 2) {
+--- a/oplata/index.php
++++ b/oplata/index.php
+@@ -38,8 +38,8 @@
+     <link rel="canonical" href="https://zakondemchenko.ru/oplata/">
+     <link rel="icon" href="/assets/favicon/favicon.ico?v=3" sizes="any">
+     <link rel="stylesheet" href="/assets/css/payment.css?v=1">
+-    <script src="/assets/js/analytics.js?v=3" defer></script>
+-    <script src="/assets/js/legal-checkout.js?v=1" defer></script>
++    <script src="/assets/js/analytics.js?v=20261030-launch" defer></script>
++    <script src="/assets/js/legal-checkout.js?v=20261030-sales" defer></script>
+ </head>
+ <body data-sales-enabled="<?= $salesEnabled ? '1' : '0' ?>" data-service-price="<?= $esc($priceLabel) ?>" data-service-slug="<?= $esc($serviceSlug) ?>">
+     <header class="pay-header">
+@@ -89,7 +89,7 @@
+ 
+         <section class="pay-card" aria-labelledby="form-title">
+             <h2 id="form-title">Данные для оформления</h2>
+-            <p class="pay-card-intro"><?= $esc($isRetainer ? 'Для организации или ИП можно запросить счёт. Для физического лица онлайн-оплата доступна после активации публичного платёжного режима.' : 'Документы после оплаты лучше направить ответом на письмо: не прикладывайте паспорт целиком и данные банковских карт.') ?></p>
++            <p class="pay-card-intro"><?= $esc($isRetainer ? 'Сопровождение оформляется для организации или ИП. Сначала согласуем объём и срок, затем направим счёт через согласованный канал связи.' : 'После оформления напишите Сергею в Telegram, укажите номер заказа и согласуйте передачу материалов. Не присылайте паспорт целиком и данные банковских карт.') ?></p>
+ 
+             <?php if (!$salesEnabled): ?>
+                 <div class="pay-notice" id="activationNotice">
+@@ -106,8 +106,8 @@
+ 
+                 <fieldset class="payer-switch">
+                     <legend>Кто оплачивает</legend>
+-                    <label><input type="radio" name="payer" value="person" checked><span>Физическое лицо</span></label>
+-                    <label><input type="radio" name="payer" value="company"><span>Организация или ИП</span></label>
++                    <?php if (!$isRetainer): ?><label><input type="radio" name="payer" value="person" checked><span>Физическое лицо</span></label><?php endif; ?>
++                    <label><input type="radio" name="payer" value="company"<?= $isRetainer ? ' checked' : '' ?>><span>Организация или ИП</span></label>
+                 </fieldset>
+ 
+                 <div class="pay-field">
+@@ -116,14 +116,14 @@
+                     <span class="field-error" data-error-for="name"></span>
+                 </div>
+                 <div class="pay-field">
+-                    <label for="customerEmail">Email для письменного ответа и чека <em>*</em></label>
++                    <label for="customerEmail">Email для чека и дополнительной связи <em>*</em></label>
+                     <input id="customerEmail" name="email" type="email" maxlength="180" autocomplete="email" required>
+                     <span class="field-error" data-error-for="email"></span>
+                 </div>
+                 <div class="pay-field">
+-                    <label for="customerContact">Telegram или телефон <span>необязательно</span></label>
+-                    <input id="customerContact" name="contact" type="text" maxlength="150" autocomplete="tel" placeholder="@username или +7…">
+-                </div>
++                    <label for="customerContact">Telegram для ответа <em>*</em></label>
++                    <input id="customerContact" name="contact" type="text" maxlength="33" autocomplete="off" placeholder="@username" pattern="@[A-Za-z0-9_]{5,32}" required>
++                <small>Укажите Telegram, в котором вы доступны для ответа. Email используется дополнительно и для чека. После оформления напишите Сергею: <a href="https://t.me/demlider">@demlider</a>.</small><span class="field-error" data-error-for="contact"></span></div>
+ 
+                 <div class="company-fields" id="companyFields" hidden>
+                     <div class="pay-field">
+@@ -157,6 +157,6 @@
+         </section>
+     </main>
+ 
+-    <footer class="pay-footer"><p>© 2026 Сергей Демченко · ПравКомпас</p><nav><a href="<?= $esc($offerPath) ?>">Условия услуги</a><a href="/privacy.html">Конфиденциальность</a><a href="/consent.html">Согласие</a><a href="tel:+79773192615">+7 (977) 319-26-15</a><a href="mailto:info@zakondemchenko.ru">Поддержка</a></nav></footer>
++    <footer class="pay-footer"><p>© 2026 Сергей Демченко · ПравКомпас</p><nav><a href="<?= $esc($offerPath) ?>">Условия услуги</a><a href="/privacy.html">Конфиденциальность</a><a href="/consent.html">Согласие</a><a href="tel:+79773192615">+7 (977) 319-26-15</a><a href="https://t.me/demlider">Поддержка в Telegram</a><a href="mailto:info@zakondemchenko.ru">Email (дополнительно)</a></nav></footer>
+ </body>
+ </html>
