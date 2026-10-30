@@ -33,7 +33,7 @@ const assert = require('node:assert/strict');
       requests++;
       const payload = route.request().postDataJSON();
       assert.equal(payload.name, 'Тест Подрядчик');
-      assert.equal(payload.contact, 'test@example.ru');
+      assert.equal(payload.contact, '@fixture_test');
       assert.equal(payload.consent, 'yes');
       assert.equal(payload.source, 'landing-podryad');
       assert.ok(payload.service === 'claim' || payload.service === undefined); // cleared after a saved lead
@@ -43,7 +43,7 @@ const assert = require('node:assert/strict');
     });
     async function fill() {
       await page.locator('[name=name]').fill('Тест Подрядчик');
-      await page.locator('[name=contact]').fill('test@example.ru');
+      await page.locator('[name=contact]').fill('@fixture_test');
       await page.locator('[name=question]').fill('Нужна претензия: работы выполнены, заказчик не оплатил.');
     }
     await fill();
@@ -74,7 +74,7 @@ const assert = require('node:assert/strict');
       assert.equal(await page.locator('button[type=submit]').isEnabled(), true); checks++;
     }
     const goals = await page.evaluate(() => window.goals);
-    assert(!JSON.stringify(goals).includes('example.ru'));
+    assert(!JSON.stringify(goals).includes('fixture_test'));
     assert(goals.every(g => Object.keys(g).every(k => ['event','page','service'].includes(k)))); checks++;
     assert.deepEqual(errors, []); checks++;
     await page.setViewportSize({width:390,height:844});

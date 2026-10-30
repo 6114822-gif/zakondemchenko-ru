@@ -1,0 +1,41 @@
+{
+  "release": "sales-release-20261030",
+  "files": [
+    {
+      "target": "zakondemchenko.ru/public_html/api/legal_create_order.php",
+      "source": "site/api/legal_create_order.php",
+      "before": "15c7e7d4f77f7ec75daa8fefad6ea74653a194947b9b2663ec5b986659707440",
+      "after": "768d7c6efe6d8757c6b5cbc5ec1ebbcaa7bea8a1d8e983ad6146d251bc7096c4"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/assets/js/landing-podryad.js",
+      "source": "site/assets/js/landing-podryad.js",
+      "before": "b9feec17fc3ae768225148963404cad13388bc6c2771b4b5c287203c49c6c612",
+      "after": "5602a933043ceeaf8749d4c3e679280022d9858749bc283a54ef269ae8954437"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/assets/js/legal-checkout.js",
+      "source": "site/assets/js/legal-checkout.js",
+      "before": "4ed58ea288828332548b205fe4de9d9c8b66c4aea5e8ae26b5de0e1580318cee",
+      "after": "66f63ec5522b9d438198e892b8f195141f2aab5a9022229afd0bc1ad10b4d164"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/landing-podryad.html",
+      "source": "site/landing-podryad.html",
+      "before": "76c6c27507c5d6d2d46243c902f42590b95b8aa374f55c158547aca8c478c1c7",
+      "after": "94a6f503d093accb4d7020f7124076c8f949171250d470388e8f5bfcce76efd9"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/oplata/index.php",
+      "source": "site/oplata/index.php",
+      "before": "f240688595976c8c11a99a30f43f3ed770b11f25b78b0842c29f0b114bcbea35",
+      "after": "c2f6461f66f6bc97094e1b2a4724e9d22509bfa879a7d9ef86a859f04ecccb08"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/oplata/uspeshno/index.html",
+      "source": "site/oplata/uspeshno/index.html",
+      "before": "e756171286cc8ffd1fdf63d11f88cd0ed1bde0061fdbc298bdaef855b145c76a",
+      "after": "f38e066b8d83c18e88c9b4d9456b30b715506433f7c17350f5c899a4ac1c31e5"
+    }
+  ]
+}

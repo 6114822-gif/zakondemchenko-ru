@@ -19,7 +19,10 @@
   const button = form.querySelector('button[type=submit]');
   let sending = false;
   let started = false;
-  let selectedService = '';
+  const requestedService = new URLSearchParams(location.search).get('service');
+  let selectedService = ['contract', 'claim', 'arbitration'].includes(requestedService) ? requestedService : '';
+  const prompts = {contract: 'Нужна проверка договора подряда. ', claim: 'Нужна претензия по неоплате работ. ', arbitration: 'Нужны документы для арбитражного спора. '};
+  if (selectedService && !form.elements.question.value.trim()) form.elements.question.value = prompts[selectedService];
   form.addEventListener('input', () => {
     if (!started) { started = true; goal('form_start'); }
   });
@@ -55,10 +58,10 @@
         });
       }
     } catch {}
-    const validContact = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.contact) || /^@?[a-zA-Z0-9_]{5,32}$/.test(payload.contact) || /^https?:\/\/t\.me\/[a-zA-Z0-9_]{5,32}\/?$/i.test(payload.contact);
+    const validContact = /^@[a-zA-Z0-9_]{5,32}$/.test(payload.contact);
     if (payload.name.length < 2 || payload.question.length < 10 || !validContact) {
       status.dataset.error = 'true';
-      status.textContent = 'Проверьте имя, email или Telegram-ник и описание задачи (минимум 10 символов).';
+      status.textContent = 'Проверьте имя, Telegram-ник вида @username и описание задачи (минимум 10 символов).';
       status.focus();
       return;
     }
@@ -76,7 +79,9 @@
       form.reset();
       started = false;
       selectedService = '';
-      status.textContent = 'Заявка №' + result.questionId + ' сохранена. Отправка заявки не означает оплату услуги.';
+      status.textContent = 'Заявка №' + result.questionId + ' сохранена. Отправка заявки не означает оплату услуги. ';
+      const lawyerLink = document.createElement('a');
+      lawyerLink.href = 'https://t.me/demlider'; lawyerLink.textContent = 'Написать Сергею в Telegram и согласовать ответ'; status.append(lawyerLink);
       if (result.autoReply === 'telegram_not_started') {
         status.append(document.createTextNode(' Для ответа в Telegram откройте бота и нажмите «Запустить». Повторно отправлять заявку не нужно. '));
         const botLink = document.createElement('a');

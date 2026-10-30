@@ -45,7 +45,7 @@
                 throw new Error(result.error || 'validation_error');
             }
             if (result.mode === 'invoice') {
-                form.innerHTML = `<div class="pay-success"><strong>Запрос счёта №${result.request_number} принят</strong><p>Проверьте email. Сергей уточнит реквизиты и направит счёт. После оплаты письменный ответ будет подготовлен в срок, указанный в оферте.</p><a href="/">Вернуться на ПравКомпас</a></div>`;
+                form.innerHTML = `<div class="pay-success"><strong>Запрос счёта №${result.request_number} принят</strong><p>Напишите Сергею в Telegram и укажите номер запроса счёта. Он уточнит реквизиты и порядок оплаты. Email используется дополнительно. После оплаты письменный ответ будет подготовлен в срок, указанный в оферте.</p><a href="https://t.me/demlider">Написать Сергею в Telegram</a> · <a href="/">Вернуться на ПравКомпас</a></div>`;
                 return;
             }
             sessionStorage.setItem('legal_order', result.order);
@@ -59,7 +59,7 @@
             document.body.appendChild(paymentForm);
             paymentForm.submit();
         } catch (error) {
-            const messages = {payment_not_configured:'Онлайн-оплата ещё подключается. Напишите Сергею на info@zakondemchenko.ru.',sales_pending_activation:'Robokassa проверяет юридический магазин. Оплата станет доступна после проверки.',invalid_session:'Страница была открыта слишком давно. Обновите её и повторите попытку.',rate_limited:'Слишком много попыток. Подождите 15 минут или напишите Сергею.',temporary_error:'Сервис временно недоступен. Попробуйте позже или напишите Сергею.',validation_error:'Проверьте обязательные поля формы.'};
+            const messages = {payment_not_configured:'Онлайн-оплата ещё подключается. Напишите Сергею в Telegram: @demlider.',sales_pending_activation:'Robokassa проверяет юридический магазин. Оплата станет доступна после проверки.',invalid_session:'Страница была открыта слишком давно. Обновите её и повторите попытку.',rate_limited:'Слишком много попыток. Подождите 15 минут или напишите Сергею.',temporary_error:'Сервис временно недоступен. Попробуйте позже или напишите Сергею.',validation_error:'Проверьте обязательные поля формы.'};
             errorBox.textContent = messages[error.message] || 'Не удалось продолжить. Повторите попытку или напишите Сергею.';
             button.disabled = !salesEnabled && form.elements.payer.value !== 'company';
             button.querySelector('span').textContent = original;

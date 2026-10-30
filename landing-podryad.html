@@ -16,7 +16,7 @@
   <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
   <link rel="stylesheet" href="assets/css/landing-podryad.css?v=20261030-launch">
   <script src="assets/js/analytics.js?v=20261030-launch" defer></script>
-  <script src="assets/js/landing-podryad.js?v=20261030-launch" defer></script>
+  <script src="assets/js/landing-podryad.js?v=20261030-telegram" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">К содержанию</a>
@@ -52,10 +52,10 @@
     <ol class="steps"><li><strong>Опишите ситуацию.</strong> Укажите вашу роль, вид работ, сумму долга и ближайший важный срок.</li><li><strong>Согласуем задачу.</strong> Уточню необходимые материалы, состав результата, стоимость и срок.</li><li><strong>Согласуем условия и оплату.</strong> Работа начинается по согласованным условиям. Заявка сама по себе не является заказом платной услуги.</li><li><strong>Получите документ.</strong> Автоматизация помогает подготовить проект; юридическую оценку и итоговую проверку выполняет специалист.</li></ol>
   </section>
   <section class="about" aria-labelledby="about"><h2 id="about">Сергей Демченко · ПравКомпас</h2><p>Я Сергей Демченко, практикующий юрист с опытом более 20 лет, в том числе руководитель юридического отдела строительной компании. Помогаю с договорными рисками, претензиями и документами для споров. Оценка задачи опирается на ваши документы и обстоятельства: универсальных обещаний взыскания здесь нет.</p><p>Для начала достаточно краткого описания. Не прикладывайте паспортные, банковские данные и конфиденциальные документы к первому обращению.</p></section>
-  <section id="request" class="cta" aria-labelledby="request-title"><h2 id="request-title">Расскажите о задаче по вашему объекту</h2><p>Оставьте email или Telegram-ник для связи. В ответ уточним возможность и условия работы.</p>
+  <section id="request" class="cta" aria-labelledby="request-title"><h2 id="request-title">Расскажите о задаче по вашему объекту</h2><p>Для надёжной связи укажите Telegram-ник. Email используется дополнительно. В ответ уточним возможность и условия работы.</p>
     <form id="contractor-form" action="api/process_form.php" method="post">
       <label for="lead-name">Ваше имя</label><input id="lead-name" name="name" autocomplete="given-name" minlength="2" maxlength="100" required>
-      <label for="lead-contact">Email или Telegram-ник</label><input id="lead-contact" name="contact" placeholder="ivan@example.ru или @username" maxlength="255" required aria-describedby="contact-help"><small id="contact-help">Телефон эта форма не принимает. Для ответа бота в Telegram нужно предварительно нажать «Запустить» у <a href="https://t.me/PravKompas_bot" data-goal="bot_click">@PravKompas_bot</a>.</small>
+      <label for="lead-contact">Telegram-ник для ответа</label><input id="lead-contact" name="contact" placeholder="@username" maxlength="255" required aria-describedby="contact-help"><small id="contact-help">Телефон эта форма не принимает. Для ответа бота в Telegram нужно предварительно нажать «Запустить» у <a href="https://t.me/PravKompas_bot" data-goal="bot_click">@PravKompas_bot</a>.</small>
       <label for="lead-question">Что произошло и какой результат нужен?</label><textarea id="lead-question" name="question" rows="5" minlength="10" maxlength="2000" required placeholder="Я субподрядчик. Работы сданы, акты не подписаны. Нужно подготовить претензию."></textarea>
       <div class="honeypot" aria-hidden="true"><label for="lead-website">Сайт</label><input id="lead-website" name="website" tabindex="-1" autocomplete="off"></div>
       <label class="consent" for="lead-consent"><input id="lead-consent" name="consent" value="yes" type="checkbox" required><span>Согласен на <a href="consent.html">обработку персональных данных</a> в соответствии с <a href="privacy.html">политикой конфиденциальности</a>.</span></label>
@@ -63,7 +63,7 @@
       <p id="lead-status" role="status" aria-live="polite" tabindex="-1"></p>
       <noscript><p>Для отправки формы нужен JavaScript. Вы можете написать по контактам ниже.</p></noscript>
     </form>
-    <p>Удобнее написать напрямую?</p><div class="actions"><a class="btn secondary" href="https://t.me/demlider" data-goal="telegram_click">Написать в Telegram</a><a class="btn secondary" href="mailto:info@zakondemchenko.ru?subject=%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0%20%D0%BF%D0%BE%20%D0%BF%D0%BE%D0%B4%D1%80%D1%8F%D0%B4%D1%83" data-goal="email_click">Написать на email</a></div>
+    <p>Удобнее написать напрямую?</p><div class="actions"><a class="btn secondary" href="https://t.me/demlider" data-goal="telegram_click">Написать в Telegram</a><a class="btn secondary" href="mailto:info@zakondemchenko.ru?subject=%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0%20%D0%BF%D0%BE%20%D0%BF%D0%BE%D0%B4%D1%80%D1%8F%D0%B4%D1%83" data-goal="email_click">Email (дополнительно)</a></div>
   </section>
   <section aria-labelledby="faq"><h2 id="faq">Частые вопросы</h2><details><summary>Можно ли обратиться, если акты не подписаны?</summary><p>Да. Нужно изучить договор, переписку, извещения и другие доказательства выполнения и сдачи работ. Возможность требований определяется после оценки материалов.</p></details><details><summary>Сколько времени займёт работа?</summary><p>Срок зависит от объёма материалов и задачи. Укажите срочный срок в заявке — возможность подготовки к этой дате согласуем заранее.</p></details></section>
 </main>

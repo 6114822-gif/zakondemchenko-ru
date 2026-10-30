@@ -1,0 +1,23 @@
+{
+  "release": "sales-telegram-20261030",
+  "files": [
+    {
+      "target": "zakondemchenko.ru/public_html/landing-podryad.html",
+      "source": "site/landing-podryad.html",
+      "before": "94a6f503d093accb4d7020f7124076c8f949171250d470388e8f5bfcce76efd9",
+      "after": "f83d8fa6da82a5dc8f0d70ab0d934b2bf19eff023e4b4dd28bae3fcb2c05e790"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/api/process_form.php",
+      "source": "site/api/process_form.php",
+      "before": "64fcc9fcf45c82923a4e04ec4ad88a813a89162c01728b2545cb486192ddb3ce",
+      "after": "9f5c2cb6f28ec21b8d3962daae2be8ef810600f45e815397a03248685db696e2"
+    },
+    {
+      "target": "zakondemchenko.ru/public_html/assets/js/landing-podryad.js",
+      "source": "site/assets/js/landing-podryad.js",
+      "before": "5602a933043ceeaf8749d4c3e679280022d9858749bc283a54ef269ae8954437",
+      "after": "9a12e3a940a61c8e7f8ed0b64ab54e9081419a04051011af32860904a2982185"
+    }
+  ]
+}

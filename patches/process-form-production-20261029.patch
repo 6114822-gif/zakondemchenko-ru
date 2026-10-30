@@ -1,6 +1,9 @@
 --- a/api/process_form.php
 +++ b/api/process_form.php
-@@ -45,0 +46,16 @@
+@@ -43,6 +43,22 @@
+ // honeypot-поле: должно быть пустым, боты обычно заполняют все поля
+ $honeypot = (string) ($input['website'] ?? '');
+ 
 +$source = in_array($input['source'] ?? '', ['landing-podryad', 'home'], true) ? $input['source'] : 'home';
 +$service = in_array($input['service'] ?? '', ['contract', 'claim', 'arbitration'], true) ? $input['service'] : '';
 +$attribution = [];
@@ -17,10 +20,35 @@
 +];
 +$crmDescription = $question . "\n\nИсточник формы: " . $source . ($service !== '' ? "; услуга: " . $service : '');
 +foreach ($attribution as $key => $value) $crmDescription .= "; " . $key . '=' . $value;
-@@ -112 +128 @@
+ $errors = [];
+ 
+ if (mb_strlen($name) < 2) {
+@@ -52,6 +68,10 @@
+ $contact = detect_contact($contactRaw);
+ if ($contact['type'] === 'unknown' || $contactRaw === '') {
+     $errors['contact'] = 'Укажите email (например, ivan@mail.ru) или Telegram-ник (например, @ivanov)';
++}
++
++if ($source === 'landing-podryad' && $contact['type'] !== 'telegram') {
++    $errors['contact'] = 'Укажите Telegram-ник для ответа, например @username. Email используется дополнительно.';
+ }
+ 
+ if (mb_strlen($question) < 10) {
+@@ -109,14 +129,15 @@
+         $identity['external_id'],
+         [
+             'title' => 'Вопрос юристу с сайта',
 -            'description' => $question,
 +            'description' => $crmDescription,
-@@ -119 +135,2 @@
+             'client_name' => $name,
+             'contact' => $contact['value'],
+             'amount' => null,
+             'paid' => false,
+             'status' => 'новый вопрос, ИИ отвечает',
+             'next_step' => 'Проверить ответ ИИ. Если тема серьёзная — предложить проверку 1 990 ₽.',
 -            'source' => 'zakondemchenko.ru/form',
 +            'source' => $source === 'landing-podryad' ? 'zakondemchenko.ru/landing-podryad' : 'zakondemchenko.ru/form',
 +            'lead_metadata' => $leadMetadata,
+         ]
+     );
+     touch_rate_limit($pdo, $ip);
