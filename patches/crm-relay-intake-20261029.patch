@@ -1,0 +1,9 @@
+--- a/api/legal_crm_relay.php
++++ b/api/legal_crm_relay.php
+@@ -75,0 +76 @@
++    'lead_desk_notify' => true,
+@@ -98 +99 @@
+-if (!$projectionSuperseded && function_exists('site_google_append_funnel')) {
++if (defined('LEGAL_SITE_GOOGLE_MIRROR_ENABLED') && LEGAL_SITE_GOOGLE_MIRROR_ENABLED && !$projectionSuperseded && function_exists('site_google_append_funnel')) {
+@@ -141,0 +143 @@
++        'zakondemchenko.ru/landing-podryad',

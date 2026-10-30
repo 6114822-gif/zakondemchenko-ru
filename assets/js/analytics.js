@@ -35,8 +35,15 @@
         script.src = 'https://mc.yandex.ru/metrika/tag.js?id=' + COUNTER_ID;
         document.head.appendChild(script);
 
+        const attribution = {};
+        const query = new URLSearchParams(location.search);
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'].forEach(key => {
+            const value = query.get(key) || '';
+            if (/^[a-zA-Z0-9_-]{1,80}$/.test(value)) attribution[key] = value;
+        });
         window.ym(COUNTER_ID, 'init', {
             ssr: true,
+            params: attribution,
             clickmap: true,
             trackLinks: true,
             accurateTrackBounce: true,
@@ -46,15 +53,16 @@
         });
     }
 
-    function reachGoal(goal) {
+    function reachGoal(goal, params) {
         if (getConsent() === 'accepted' && window.ym) {
-            window.ym(COUNTER_ID, 'reachGoal', goal);
+            if (/^[a-z_]{1,64}$/.test(goal)) window.ym(COUNTER_ID, 'reachGoal', goal, params);
         }
     }
 
     window.pravkompasReachGoal = reachGoal;
 
     function showNotice() {
+        if (document.querySelector('.analytics-consent')) return;
         const style = document.createElement('style');
         style.textContent = '.analytics-consent{position:fixed;z-index:9999;left:50%;bottom:12px;width:calc(100% - 24px);max-width:960px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:14px;transform:translateX(-50%);padding:11px 14px;border-radius:13px;background:#152b29;color:#fff;box-shadow:0 12px 34px rgba(21,43,41,.25);font:12px/1.42 system-ui,sans-serif}.analytics-consent p{margin:0;color:#fff}.analytics-consent a{color:#e7b998;text-decoration:underline}.analytics-consent>div{display:flex;gap:8px;flex-wrap:nowrap;margin:0}.analytics-consent button{white-space:nowrap;border:1px solid rgba(255,255,255,.35);border-radius:9px;padding:8px 11px;background:transparent;color:#fff;font-size:11px;font-weight:750;cursor:pointer}.analytics-consent button:first-child{background:#9f512e;border-color:#9f512e;color:#fff}@media(max-width:680px){.analytics-consent{bottom:8px;grid-template-columns:1fr;gap:8px;padding:10px 11px;font-size:11px}.analytics-consent>div{display:grid;grid-template-columns:1fr 1fr}.analytics-consent button{white-space:normal;padding:7px 8px}}';
         document.head.appendChild(style);
@@ -73,6 +81,7 @@
         banner.querySelector('[data-analytics="accept"]').addEventListener('click', function () {
             setConsent('accepted');
             loadMetrika();
+            document.dispatchEvent(new CustomEvent('pravkompas:analytics-consent'));
             banner.remove();
         });
         banner.querySelector('[data-analytics="reject"]').addEventListener('click', function () {
@@ -88,7 +97,13 @@
         new MutationObserver(function (mutations) {
             mutations.forEach(function (m) { m.addedNodes.forEach(protectFields); });
         }).observe(document.documentElement, { childList: true, subtree: true });
-        if (consent === 'accepted') loadMetrika();
+        const settings = document.createElement('button');
+        settings.type = 'button';
+        settings.textContent = 'Настройки аналитики';
+        settings.style.cssText = 'font:inherit;font-size:14px;margin:12px;padding:8px;cursor:pointer';
+        settings.addEventListener('click', showNotice);
+        (document.querySelector('footer') || document.body).appendChild(settings);
+        if (consent === 'accepted') { loadMetrika(); document.dispatchEvent(new CustomEvent('pravkompas:analytics-consent')); }
         if (consent !== 'accepted' && consent !== 'rejected') showNotice();
 
         document.addEventListener('click', function (event) {
@@ -96,7 +111,7 @@
             if (!link) return;
             const href = link.getAttribute('href') || '';
             const explicitGoal = link.dataset.goal;
-            if (explicitGoal) reachGoal(explicitGoal);
+            if (explicitGoal && !document.getElementById('contractor-form')) reachGoal(explicitGoal);
             if (href.includes('t.me/') || href.includes('tg://')) reachGoal('messenger_telegram');
             else if (href.includes('vk.com/') || href.includes('vk.ru/')) reachGoal('messenger_vk');
             else if (href.includes('max.ru/')) reachGoal('messenger_max');

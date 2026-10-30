@@ -22,7 +22,7 @@ const assert = require('node:assert/strict');
     for (const path of ['assets/css/landing-podryad.css', 'assets/js/landing-podryad.js', 'assets/favicon/favicon.ico', 'privacy.html', 'consent.html']) {
       assert.equal((await page.request.get('http://127.0.0.1:18749/' + path)).status(), 200); checks++;
     }
-    assert.equal(await page.locator('meta[name=robots]').getAttribute('content'), 'noindex,follow'); checks++;
+    assert.equal(await page.locator('meta[name=robots]').getAttribute('content'), 'index,follow'); checks++;
     assert.equal(await page.locator('link[rel=canonical]').getAttribute('href'), 'https://zakondemchenko.ru/landing-podryad.html'); checks++;
     await page.locator('[data-service=claim]').click();
     assert.match(await page.locator('[name=question]').inputValue(), /неоплате/); checks++;

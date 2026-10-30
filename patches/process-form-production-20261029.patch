@@ -1,16 +1,26 @@
 --- a/api/process_form.php
 +++ b/api/process_form.php
-@@ -45,0 +46,9 @@
-+// Fixed labels only; do not place arbitrary campaign/query text into CRM.
+@@ -45,0 +46,16 @@
 +$source = in_array($input['source'] ?? '', ['landing-podryad', 'home'], true) ? $input['source'] : 'home';
 +$service = in_array($input['service'] ?? '', ['contract', 'claim', 'arbitration'], true) ? $input['service'] : '';
++$attribution = [];
++if (($input['analytics_consent'] ?? '') === 'yes') {
++    foreach (['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'] as $key) {
++        $value = $input[$key] ?? '';
++        if (is_string($value) && preg_match('/\A[a-zA-Z0-9_-]{1,80}\z/D', $value) === 1) $attribution[$key] = $value;
++    }
++}
 +$leadMetadata = [
-+    'source' => $source,
-+    'service' => $service,
++    'source' => $source, 'service' => $service, 'attribution' => $attribution,
 +    'consent_received_at' => gmdate('c'),
 +    'consent_sha256' => hash_file('sha256', __DIR__ . '/../consent.html'),
 +];
-@@ -119 +128,2 @@
++$crmDescription = $question . "\n\nИсточник формы: " . $source . ($service !== '' ? "; услуга: " . $service : '');
++foreach ($attribution as $key => $value) $crmDescription .= "; " . $key . '=' . $value;
+@@ -112 +128 @@
+-            'description' => $question,
++            'description' => $crmDescription,
+@@ -119 +135,2 @@
 -            'source' => 'zakondemchenko.ru/form',
 +            'source' => $source === 'landing-podryad' ? 'zakondemchenko.ru/landing-podryad' : 'zakondemchenko.ru/form',
 +            'lead_metadata' => $leadMetadata,

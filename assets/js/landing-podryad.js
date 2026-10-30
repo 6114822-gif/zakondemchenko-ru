@@ -9,7 +9,7 @@
   // Bridge to the site-wide analytics (assets/js/analytics.js), if present. That helper sends a goal
   // only after the visitor accepted analytics, so this is a no-op otherwise.
   window.addEventListener('contractor:goal', ({ detail }) => {
-    if (typeof window.pravkompasReachGoal === 'function') window.pravkompasReachGoal(detail.event);
+    if (typeof window.pravkompasReachGoal === 'function') window.pravkompasReachGoal(detail.event, detail.service ? {service: detail.service} : undefined);
   });
   document.querySelectorAll('[data-goal]').forEach(link => {
     link.addEventListener('click', () => goal(link.dataset.goal, link.dataset.service));
@@ -45,6 +45,16 @@
     payload.consent = form.elements.consent.checked ? 'yes' : ''; // production contract
     payload.source = 'landing-podryad';
     if (selectedService) payload.service = selectedService;
+    try {
+      if (localStorage.getItem('zakondemchenko_analytics_consent') === 'accepted') {
+        payload.analytics_consent = 'yes';
+        const params = new URLSearchParams(location.search);
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'].forEach(key => {
+          const value = params.get(key) || '';
+          if (/^[a-zA-Z0-9_-]{1,80}$/.test(value)) payload[key] = value;
+        });
+      }
+    } catch {}
     const validContact = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.contact) || /^@?[a-zA-Z0-9_]{5,32}$/.test(payload.contact) || /^https?:\/\/t\.me\/[a-zA-Z0-9_]{5,32}\/?$/i.test(payload.contact);
     if (payload.name.length < 2 || payload.question.length < 10 || !validContact) {
       status.dataset.error = 'true';
